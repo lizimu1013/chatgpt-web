@@ -15,7 +15,7 @@ export interface UserState {
 export function defaultSetting(): UserState {
   return {
     userInfo: {
-      avatar: 'https://github.com/lizimu1013/chatgpt-web/blob/cf03b65a4d7ccb1f6e66049bb94180aae06f9d47/src/assets/avatar.jpg',
+      avatar: 'https://doget-api.oopscloud.xyz/api/download?token=eyJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJodHRwczovL3Jhdy5naXRodWJ1c2VyY29udGVudC5jb20vbGl6aW11MTAxMy9jaGF0Z3B0LXdlYi9tYWluL3NyYy9hc3NldHMvYXZhdGFyLmpwZyJ9.5Pelnj8BT28RZvg5CoJ4OJnCts8ZVJQgr6B0jG2ETbk',
       name: '在非洲修基站',
       description: '用爱发电',
     },

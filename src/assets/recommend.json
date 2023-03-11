@@ -2,7 +2,7 @@
   {
     "key": "awesome-chatgpt-prompts-zh",
     "desc": "ChatGPT 中文调教指南",
-    "downloadUrl": "https://raw.githubusercontent.com/Nothing1024/chatgpt-prompt-collection/main/awesome-chatgpt-prompts-zh.json",
+    "downloadUrl": "https://doget-api.oopscloud.xyz/api/download?token=eyJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJodHRwczovL3Jhdy5naXRodWJ1c2VyY29udGVudC5jb20vTm90aGluZzEwMjQvY2hhdGdwdC1wcm9tcHQtY29sbGVjdGlvbi9tYWluL2F3ZXNvbWUtY2hhdGdwdC1wcm9tcHRzLXpoLmpzb24ifQ.RzTJBgaXA8AwUyiqD7Xns-MM3e9w3DbcNNZWHgFbjds",
     "url": "https://github.com/PlexPt/awesome-chatgpt-prompts-zh"
   }
 ]
