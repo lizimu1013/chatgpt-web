@@ -17,7 +17,7 @@ export function defaultSetting(): UserState {
     userInfo: {
       avatar: 'https://doget-api.oopscloud.xyz/api/download?token=eyJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJodHRwczovL3Jhdy5naXRodWJ1c2VyY29udGVudC5jb20vbGl6aW11MTAxMy9jaGF0Z3B0LXdlYi9tYWluL3NyYy9hc3NldHMvYXZhdGFyLmpwZyJ9.5Pelnj8BT28RZvg5CoJ4OJnCts8ZVJQgr6B0jG2ETbk',
       name: '在非洲修基站',
-      description: '用爱发电',
+      description: '用爱发电： <a href="https://jq.qq.com/?_wv=1027&k=BvDbhEcV" class="text-blue-500" target="_blank" >分享交流群</a>',
     },
   }
 }
