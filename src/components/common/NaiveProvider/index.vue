@@ -23,6 +23,10 @@ const NaiveProviderContent = defineComponent({
   setup() {
     registerNaiveTools()
   },
+  // mounted() {
+  //   // eslint-disable-next-line no-alert lizimu
+  //   window.alert('请关注公众号回复“key”获取密钥')
+  // },
   render() {
     return h('div')
   },
@@ -34,6 +38,10 @@ const NaiveProviderContent = defineComponent({
     <NDialogProvider>
       <NNotificationProvider>
         <NMessageProvider>
+          <!-- <div class="home">
+            <img src="https://mkdimg.oss-cn-shanghai.aliyuncs.com/img_for_typora_2023/default.jpg" alt="Welcome Image"> //其他页面内容 lizimu
+          </div> -->
+
           <slot />
           <NaiveProviderContent />
         </NMessageProvider>

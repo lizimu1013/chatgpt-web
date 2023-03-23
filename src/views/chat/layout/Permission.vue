@@ -3,7 +3,6 @@ import { computed, ref } from 'vue'
 import { NButton, NInput, NModal, useMessage } from 'naive-ui'
 import { fetchVerify } from '@/api'
 import { useAuthStore } from '@/store'
-import Icon403 from '@/icons/403.vue'
 
 interface Props {
   visible: boolean
@@ -60,9 +59,12 @@ function handlePress(event: KeyboardEvent) {
             403
           </h2>
           <p class="text-base text-center text-slate-500 dark:text-slate-500">
-            {{ $t('common.unauthorizedTips') }}
+            {{ $t('请关注官方公众号，输入“key”获取免费密钥') }}
           </p>
-          <Icon403 class="w-[200px] m-auto" />
+          <div class="container">
+            <img src="https://mkdimg.oss-cn-shanghai.aliyuncs.com/img_for_typora_2023/%E6%89%AB%E7%A0%81_%E6%90%9C%E7%B4%A2%E8%81%94%E5%90%88%E4%BC%A0%E6%92%AD%E6%A0%B7%E5%BC%8F-%E7%99%BD%E8%89%B2%E7%89%88.png">
+          </div>
+          <!-- <Icon403 class="w-[200px] m-auto" lizimu/> -->
         </header>
         <NInput v-model:value="token" type="password" placeholder="" @keypress="handlePress" />
         <NButton
@@ -78,3 +80,11 @@ function handlePress(event: KeyboardEvent) {
     </div>
   </NModal>
 </template>
+
+<style>
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+</style>
