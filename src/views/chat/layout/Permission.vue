@@ -59,13 +59,16 @@ function handlePress(event: KeyboardEvent) {
             403
           </h2> -->
           <p class="text-base text-center text-slate-500 dark:text-slate-500">
-            {{ $t('请长按或扫描二维码关注官方公众号，获取最新动态。') }}
+            {{ $t('请长按或扫描二维码或搜索关注官方公众号，获取最新动态。') }}
           </p>
           <p class="text-base text-center text-slate-500 dark:text-slate-500">
             {{ $t('公众号中输入“key”获取最新免费密钥') }}
           </p>
+          <p class="text-base text-center text-slate-500 dark:text-slate-500">
+            {{ $t('友情提示：不要发送公司涉密信息！') }}
+          </p>
           <div class="container">
-            <img src="https://mkdimg.oss-cn-shanghai.aliyuncs.com/img_for_typora_2023/%E6%89%AB%E7%A0%81_%E6%90%9C%E7%B4%A2%E8%81%94%E5%90%88%E4%BC%A0%E6%92%AD%E6%A0%B7%E5%BC%8F-%E7%99%BD%E8%89%B2%E7%89%88.png">
+            <img src="https://mkdimg.oss-cn-shanghai.aliyuncs.com/img_for_typora_2023/image-20230330103548986.png">
           </div>
           <!-- <Icon403 class="w-[200px] m-auto" lizimu/> -->
         </header>
