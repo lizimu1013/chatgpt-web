@@ -26,6 +26,18 @@ const routes: RouteRecordRaw[] = [
   },
 
   {
+    path: '/mario',
+    name: 'mario',
+    component: () => import('@/views/admin.vue'),
+  },
+
+  {
+    path: '/kirby',
+    name: 'kirby',
+    component: () => import('@/views/refresh.vue'),
+  },
+
+  {
     path: '/500',
     name: '500',
     component: () => import('@/views/exception/500/index.vue'),
