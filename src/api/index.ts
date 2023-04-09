@@ -49,3 +49,30 @@ export function fetchVerify<T>(token: string) {
     data: { token },
   })
 }
+
+export function fetchNewKey<T>() {
+  return post<T>({
+    url: '/gen_key',
+  })
+}
+
+export function login<T>(username: string) {
+  return post<T>({
+    url: 'http://localhost:8090/user/login',
+    data: { username },
+  })
+}
+
+export function verifyKey<T>(secret_key: string) {
+  return post<T>({
+    url: 'http://localhost:8090/user/verify',
+    data: { secret_key },
+  })
+}
+
+export function request<T>(jwt_token: string) {
+  return post<T>({
+    url: 'http://localhost:8090/service/request',
+    data: { jwt_token },
+  })
+}

@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
-import { getToken, removeToken, setToken } from './helper'
+import { getJWTToken, getToken, removeToken, setJWTToken, setToken } from './helper'
 import { store } from '@/store'
-import { fetchSession } from '@/api'
+import { fetchSession, login, verifyKey } from '@/api'
 
 interface SessionResponse {
   auth: boolean
@@ -11,12 +11,14 @@ interface SessionResponse {
 export interface AuthState {
   token: string | undefined
   session: SessionResponse | null
+  JWT: string | undefined
 }
 
 export const useAuthStore = defineStore('auth-store', {
   state: (): AuthState => ({
     token: getToken(),
     session: null,
+    JWT: getJWTToken(),
   }),
 
   getters: {
@@ -30,6 +32,37 @@ export const useAuthStore = defineStore('auth-store', {
       try {
         const { data } = await fetchSession<SessionResponse>()
         this.session = { ...data }
+        return Promise.resolve(data)
+      }
+      catch (error) {
+        return Promise.reject(error)
+      }
+    },
+
+    async verifyKey(secret_key: string) {
+      try {
+        const data = await verifyKey(secret_key)
+
+        if (data.token) {
+          const loginInfo = await login(data.token)
+          console.log(loginInfo)
+        }
+
+        setJWTToken(data.token)
+        return Promise.resolve(data)
+      }
+      catch (error) {
+        return Promise.reject(error)
+      }
+    },
+
+    async vipLogin(username: string) {
+      try {
+        const data = await login(username)
+        console.log(data.token)
+
+        setJWTToken(data.token)
+
         return Promise.resolve(data)
       }
       catch (error) {

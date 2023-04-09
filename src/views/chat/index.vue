@@ -3,7 +3,7 @@ import type { Ref } from 'vue'
 import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
-import { NAutoComplete, NButton, NInput, useDialog, useMessage } from 'naive-ui'
+import { NAutoComplete, NButton, NInput, NModal, NSpace, useDialog, useMessage } from 'naive-ui'
 import html2canvas from 'html2canvas'
 import { Message } from './components'
 import { useScroll } from './hooks/useScroll'
@@ -13,8 +13,8 @@ import { useUsingContext } from './hooks/useUsingContext'
 import HeaderComponent from './components/Header/index.vue'
 import { HoverButton, SvgIcon } from '@/components/common'
 import { useBasicLayout } from '@/hooks/useBasicLayout'
-import { useChatStore, usePromptStore } from '@/store'
-import { fetchChatAPIProcess } from '@/api'
+import { useAuthStore, useChatStore, usePromptStore } from '@/store'
+import { fetchChatAPIProcess, request } from '@/api'
 import { t } from '@/locales'
 
 let controller = new AbortController()
@@ -26,6 +26,7 @@ const dialog = useDialog()
 const ms = useMessage()
 
 const chatStore = useChatStore()
+const authStore = useAuthStore()
 
 useCopyCode()
 
@@ -42,6 +43,16 @@ const conversationList = computed(() => dataSources.value.filter(item => (!item.
 const prompt = ref<string>('')
 const loading = ref<boolean>(false)
 const inputRef = ref<Ref | null>(null)
+// 关注公众号
+const needFollowupWechat = ref(true)
+// 关注公众号弹框
+const showModal = ref(false)
+// 输入的key
+const inputKey = ref('')
+
+const inputEmail = ref('')
+// vip
+const vip = ref(false)
 
 // 添加PromptStore
 const promptStore = usePromptStore()
@@ -55,11 +66,36 @@ dataSources.value.forEach((item, index) => {
     updateChatSome(+uuid, index, { loading: false })
 })
 
-function handleSubmit() {
-  onConversation()
+async function handleSubmit() {
+  if (authStore.JWT) {
+    await request(authStore.JWT)
+    onConversation()
+  }
 }
 
-async function onConversation() {
+async function handleLogin(): Promise<void> {
+  // 登录
+  await authStore.vipLogin(inputEmail.value)
+}
+
+const vipUser = () => {
+  vip.value = true
+}
+
+const handleVerifyKey = async () => {
+  try {
+    await authStore.verifyKey(inputKey.value)
+    showModal.value = false
+  }
+  catch (error) {
+    dialog.error({
+      title: 'Key 不正确',
+      content: '请重新输入',
+    })
+  }
+}
+
+async function onConversation(): Promise<void> {
   let message = prompt.value
 
   if (loading.value)
@@ -442,7 +478,7 @@ const placeholder = computed(() => {
 })
 
 const buttonDisabled = computed(() => {
-  return loading.value || !prompt.value || prompt.value.trim() === ''
+  return loading.value || !prompt.value || prompt.value.trim() === '' || needFollowupWechat.value
 })
 
 const footerClass = computed(() => {
@@ -453,6 +489,16 @@ const footerClass = computed(() => {
 })
 
 onMounted(() => {
+  // 检查localstorage中有无jwt
+  const jwt = authStore.JWT
+  if (jwt) {
+    showModal.value = false
+    needFollowupWechat.value = false
+  }
+  else {
+    showModal.value = true
+  }
+
   scrollToBottom()
   if (inputRef.value && !isMobile.value)
     inputRef.value?.focus()
@@ -559,4 +605,42 @@ onUnmounted(() => {
       </div>
     </footer>
   </div>
+
+  <NModal
+    v-model:show="showModal"
+    class="custom-card"
+    preset="card"
+    size="huge"
+    :bordered="false"
+    style="width: 600px"
+  >
+    <div v-if="vip">
+      <NInput v-model:value="inputEmail" type="text" placeholder="请输入邮箱" style="margin-top: 16px;" />
+
+      <NSpace vertical>
+        <NButton type="primary" style="margin-top: 16px;" @click="handleLogin">
+          登录
+        </NButton>
+
+        <NButton type="primary" style="margin-top: 16px;" @click="vip = false">
+          关注公众号
+        </NButton>
+      </NSpace>
+    </div>
+    <div v-else>
+      请长按或扫描二维码或搜索关注官方公众号，获取最新动态公众号中输入“key”获取最新免费密钥
+
+      <NInput v-model:value="inputKey" type="text" placeholder="请输入Key" style="margin-top: 16px;" />
+
+      <NSpace vertical>
+        <NButton type="primary" style="margin-top: 16px;" @click="handleVerifyKey">
+          验证
+        </NButton>
+
+        <NButton type="primary" style="margin-top: 16px;" @click="vipUser">
+          VIP登录
+        </NButton>
+      </NSpace>
+    </div>
+  </NModal>
 </template>
